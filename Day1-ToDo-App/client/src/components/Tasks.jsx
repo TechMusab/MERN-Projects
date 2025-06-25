@@ -1,7 +1,7 @@
 import React from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-export default function Tasks({tasklist,onDelete,setedit,setinput}) {
+export default function Tasks({tasklist,onDelete,seteditid,setinput}) {
 
 
   return (
@@ -15,10 +15,10 @@ export default function Tasks({tasklist,onDelete,setedit,setinput}) {
                 <p className=" text-2xl">{task.description}</p>
                 <div className="flex gap-2">
                 <FaEdit onClick={()=>{
-                    setedit(task.id);
+                    seteditid(task._id);
                     setinput(task.description); 
                 }} className="cursor-pointer" size={28} color="black" />
-                  <MdDeleteOutline onClick={()=>onDelete(task.id)} className="cursor-pointer" size={28} color="red" />
+                  <MdDeleteOutline onClick={()=>onDelete(task._id)} className="cursor-pointer" size={28} color="red" />
                  
                 </div>
               </li>
