@@ -1,13 +1,9 @@
 const User=require('../models/User')
 const Note=require('../models/Note')
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
-
 exports.getnotes=async (req,res)=>{
     try{
         const notes=await Note.find({
-            user:req.userId
+            userId:req.userId
         })
         res.status(200).json({
             message: 'Notes retrieved successfully',
@@ -22,11 +18,11 @@ exports.getnotes=async (req,res)=>{
     }
 }
 exports.addnote= async (req, res) => {
-    const {title,description}=req.body
+    const {description}=req.body
+    console.log(description)
     const note=new Note({
-        title:title,
         description:description,
-        user:req.userId
+        userId:req.userId
     })
     try{
         const savedNote=await note.save()
@@ -36,6 +32,7 @@ exports.addnote= async (req, res) => {
         })
     }
     catch(err){
+        console.error(err)
         res.status(500).json({
             message: 'Error saving note',
             error: err.message

@@ -1,4 +1,5 @@
-const router=express.router()
+const express=require('express')
+const router=express.Router()
 const userController = require('../controllers/userController');
 const notesController = require('../controllers/noteController');
 const auth=require('../middleware/auth')

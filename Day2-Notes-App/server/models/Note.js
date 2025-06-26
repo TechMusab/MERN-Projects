@@ -1,11 +1,7 @@
 const mongoose=require('mongoose')
-const User=require('User')
+const User=require('./User')
 
 const NoteSchema=new mongoose.Schema({
-    title:{
-            type: String,
-            required: true
-        },
     description:{
             type: String,
             required: true
@@ -18,3 +14,4 @@ const NoteSchema=new mongoose.Schema({
     
 })
 const Note=mongoose.model('Note',NoteSchema)
+module.exports = Note;
