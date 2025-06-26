@@ -18,7 +18,6 @@ exports.getnotes=async (req,res)=>{
 }
 exports.addnote= async (req, res) => {
     const {description}=req.body
-    console.log(description)
     const note=new Note({
         description:description,
         userId:req.userId
@@ -31,7 +30,6 @@ exports.addnote= async (req, res) => {
         })
     }
     catch(err){
-        console.error(err)
         res.status(500).json({
             message: 'Error saving note',
             error: err.message

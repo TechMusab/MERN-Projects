@@ -1,5 +1,3 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import Signup from './components/Signup'
 import Signin from './components/Signin'
 import AddNotes from './components/addNotes'
