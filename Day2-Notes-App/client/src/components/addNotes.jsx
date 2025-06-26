@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import Notes from "./Notes";
 import axios from "axios";
 export default function AddNotes() {
-  const [note, setnote] = React.useState("");
-  const [notes, setNotes] = React.useState([]);
-
-  //fetch Notes
+  const [note, setnote] = useState("");
+  const [notes, setNotes] = useState([]);
+  const [edit, setedit] = useState(null);
   const fetchNotes = async () => {
     try {
       const data = await axios.get("http://localhost:3000/api/users/notes", {
@@ -13,7 +13,7 @@ export default function AddNotes() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(data.data.notes)
+      console.log(data.data.notes);
       setNotes(data.data.notes);
     } catch (err) {
       console.error("Error fetching notes:", err);
@@ -29,16 +29,42 @@ export default function AddNotes() {
       alert("Please enter a note before adding it.");
       return;
     }
-    const newNote = {
+    if (edit) {
+      const updatedNote = {
         description: note,
-    }
-    const res=await axios.post("http://localhost:3000/api/users/notes",newNote,{
+      };
+      await axios.put(
+        `http://localhost:3000/api/users/notes/${edit}`,
+        updatedNote,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setedit(null);
+      setnote("");
+      fetchNotes();
+    } else {
+      const newNote = {
+        description: note,
+      };
+      await axios.post("http://localhost:3000/api/users/notes", newNote, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-      })
-    fetchNotes()
+      });
+      fetchNotes();
+    }
   };
+  const ondelete=async (id)=>{
+    await axios.delete(`http://localhost:3000/api/users/notes/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    fetchNotes();
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 flex flex-col items-center pt-20 px-4">
@@ -61,7 +87,7 @@ export default function AddNotes() {
       </div>
 
       <div className="w-full max-w-2xl">
-        <Notes notes={notes} />
+        <Notes notes={notes} setnote={setnote} setedit={setedit} ondelete={ondelete}  />
       </div>
     </div>
   );

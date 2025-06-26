@@ -9,7 +9,10 @@ function App() {
 
   return (
     <>
-    <h1 className='bg-green-500 text-3xl text-center p-6 text-bold'>Notes App</h1>
+   <h1 className="bg-gradient-to-r from-green-400 to-green-600 text-white text-4xl font-extrabold text-center py-6 shadow-lg rounded-b-2xl">
+  Notes App
+</h1>
+
     <Router>
       <Routes>
         <Route path="/" element={<Signup />} />

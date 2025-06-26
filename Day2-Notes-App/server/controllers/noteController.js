@@ -1,4 +1,3 @@
-const User=require('../models/User')
 const Note=require('../models/Note')
 exports.getnotes=async (req,res)=>{
     try{
@@ -41,17 +40,16 @@ exports.addnote= async (req, res) => {
 }
 exports.updateNote=async (req,res)=>{
     const {id}=req.params
-    const {title,description}=req.body
+    const {description}=req.body
     try{
         const note=await Note.findById(id)
-        if(!note || note.userId!==req._id){
+        if (!note || note.userId.toString() !== req.userId){
             res.status(404).json({
                 message: 'Note not found or unauthorized access',
 
             })
         }
         else{
-            note.title=title
             note.description=description
             const updatedNote=await note.save()
             res.status(200).json({
@@ -71,13 +69,13 @@ exports.deleteNote=async (req,res)=>{
     const {id}=req.params
     try{
         const note=await Note.findById(id)
-        if(!note || note.userId!==req._id){
+        if (!note || note.userId.toString() !== req.userId){
             res.status(404).json({
                 message: 'Note not found or unauthorized access',
             })
         }
         else{
-            await note.remove()
+            await Note.findByIdAndDelete(id);
             res.status(200).json({
                 message: 'Note deleted successfully'
             })
