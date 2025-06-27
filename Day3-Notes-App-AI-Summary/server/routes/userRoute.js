@@ -1,15 +1,22 @@
-const express=require('express')
-const router=express.Router()
-const userController = require('../controllers/userController');
-const notesController = require('../controllers/noteController');
-const auth=require('../middleware/auth')
-router.post('/signup',userController.register)
-router.post('/login',userController.login)
-router.get('/notes',auth,notesController.getnotes)
-router.post('/notes',auth,notesController.addnote)
-router.put('/notes/:id',auth,notesController.updateNote)
-router.delete('/notes/:id',auth,notesController.deleteNote)
-router.post('/notes/ai/summary',auth,notesController.getSummary)
+import express from "express";
+import { register, login } from "../controllers/userController.js";
+import {
+  getnotes,
+  addnote,
+  updateNote,
+  deleteNote,
+  getSummary,
+} from "../controllers/noteController.js";
+import auth from "../middleware/auth.js";
 
+const router = express.Router();
 
-module.exports=router;
+router.post("/signup", register);
+router.post("/login", login);
+router.get("/notes", auth, getnotes);
+router.post("/notes", auth, addnote);
+router.put("/notes/:id", auth, updateNote);
+router.delete("/notes/:id", auth, deleteNote);
+router.post("/notes/ai/summary", auth, getSummary);
+
+export default router;

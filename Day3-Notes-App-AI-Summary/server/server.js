@@ -1,8 +1,9 @@
-const express=require('express')
-const cors=require('cors')
-const mongoose=require('mongoose')
-const userRoute=require('./routes/userRoute')
-require('dotenv').config()
+import express from 'express'
+import cors from 'cors'
+import mongoose from 'mongoose'
+import userRoute from './routes/userRoute.js'
+import dotenv from 'dotenv'
+dotenv.config()
 const app=express()
 app.use(cors())
 app.use(express.json())

@@ -13,7 +13,6 @@ export default function AddNotes() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(data.data.notes);
       setNotes(data.data.notes);
     } catch (err) {
       console.error("Error fetching notes:", err);

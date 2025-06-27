@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios";
 export default function Notes({ notes, setedit, setnote, ondelete }) {
+  const [summary,setSummary]=useState("")
   const getSummary = async (notes) => {
-    await axios.post(
+    const res=await axios.post(
       "http://localhost:3000/api/users/notes/ai/summary",
       { notes },
       {
@@ -13,6 +14,8 @@ export default function Notes({ notes, setedit, setnote, ondelete }) {
         },
       }
     );
+      setSummary(res.data.summary); 
+
   };
   return (
     <>
@@ -48,6 +51,12 @@ export default function Notes({ notes, setedit, setnote, ondelete }) {
           );
         })}
       </ul>
+      {summary && (
+        <div className="mt-4 p-4 bg-yellow-100 rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold mb-2">Summary</h2>
+          <p className="text-gray-700">{summary}</p>
+        </div>
+      )}
     </>
   );
 }

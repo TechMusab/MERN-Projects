@@ -18,7 +18,6 @@ export default function Signup() {
     );
     if (res.status === 200) {
       alert("Logged in Successfully");
-      console.log(res.data.token)
       //saving token to local storage
     localStorage.setItem("token", res.data.token);
       navigate("/notes");
