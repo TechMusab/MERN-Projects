@@ -15,7 +15,6 @@ export default function Notes({ notes, setedit, setnote, ondelete }) {
       }
     );
       setSummary(res.data.summary); 
-
   };
   return (
     <>
