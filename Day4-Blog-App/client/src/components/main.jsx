@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from 'axios'
+
 
 export default function Main() {
   const [Modal, setModal] = useState(false);
@@ -7,9 +9,13 @@ export default function Main() {
     content: "",
     image: "",
   });
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    console.log("Blog submitted:", blog);
+    const formData=new FormData()
+    formData.append("title",blog.title)
+    formData.append("content",blog.content)
+    formData.append("image",blog.image)
+    await axios.post('http://localhost:5000/createblog',formData)
     setblog({ title: "", content: "", image: "" });
     setModal(false);
   };
