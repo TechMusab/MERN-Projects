@@ -1,4 +1,4 @@
-import blog from "../Models/blog.js";
+import blog from "../models/blog.js";
 import express from "express";
 import multer from "multer";
 const router = express.Router();
@@ -48,5 +48,27 @@ router.get("/getblogs", async (req, res) => {
       error: err.message,
     });
   }
+});
+router.put("/blog/:id", upload.single("image"),async (req,res)=>{
+  const id = req.params.id;
+  const { title, content,image } = req.body;
+  const Blog = await blog.findByIdAndUpdate(id, { title, content, image }, { new: true });
+  if (!Blog) {
+    return res.status(404).json({ message: "Blog not found" });
+  }
+  res.status(200).json({
+    message: "Blog updated successfully",
+  });
+
+})
+router.delete("/blog/:id", async (req, res) => {
+  const id = req.params.id;
+  const blogToDelete = await blog.findByIdAndDelete(id);
+  if (!blogToDelete) {
+    return res.status(404).json({ message: "Blog not found" });
+  }
+  res.status(200).json({
+    message: "Blog deleted successfully",
+  });
 });
 export default router;
