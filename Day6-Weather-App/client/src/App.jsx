@@ -7,7 +7,8 @@ function App() {
       alert("Please enter a city name");
       return;
     }
-    const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid={23b20e1188aa3ab8fb0086afaa7f71f8}&units=metric`;
+    const apiKey = import.meta.env.VITE_API_KEY;
+    const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid={${apiKey}}&units=metric`;
     try {
       const res = await fetch(URL);
       if (!res.ok) {
