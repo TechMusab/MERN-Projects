@@ -1,18 +1,20 @@
 import { useState } from "react";
 function App() {
   const [city, setCity] = useState("");
+  const [weatherData, setWeatherData] = useState({});
   const handlegetWeather = async (city) => {
     if (!city) {
       alert("Please enter a city name");
       return;
     }
-    const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid={63aac085793027c284b3f0da8e023b7e}&units=metric`;
+    const URL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid={23b20e1188aa3ab8fb0086afaa7f71f8}&units=metric`;
     try {
       const res = await fetch(URL);
       if (!res.ok) {
         throw new Error("City not found");
       }
       const data = await res.json();
+      setWeatherData(data);
       console.log(data);
     } catch (error) {
       console.error("Error fetching weather data:", error);
@@ -50,17 +52,19 @@ function App() {
             <div className="space-y-3 text-center text-gray-700 text-lg">
               <p>
                 <span className="font-semibold text-green-600">City:</span>{" "}
-                city
+                {weatherData.name || "N/A"}
               </p>
               <p>
                 <span className="font-semibold text-green-600">
                   Temperature:
                 </span>{" "}
-                temperature °C
+                {weatherData.main ? `${weatherData.main.temp} °C` : "N/A"}
               </p>
               <p>
                 <span className="font-semibold text-green-600">Condition:</span>{" "}
-                condition
+                {weatherData.weather && weatherData.weather.length > 0
+                  ? weatherData.weather[0].description
+                  : "N/A"}
               </p>
             </div>
           </div>
